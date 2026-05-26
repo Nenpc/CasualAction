@@ -6,8 +6,18 @@ using Unity.Burst;
 public partial struct PlayerInputSystem : ISystem
 {
     [BurstCompile]
+    public void OnCreate(ref SystemState state)
+    {
+        state.RequireForUpdate<GameStateComponent>();
+    }
+
+    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
+        var gameState = SystemAPI.GetSingleton<GameStateComponent>();
+        if (!gameState.IsGameStarted || gameState.IsPaused || gameState.IsGameOver)
+            return;
+
         var input = SystemAPI.GetSingletonRW<PlayerInputComponent>();
 
         float x = 0f, z = 0f;

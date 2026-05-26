@@ -15,8 +15,7 @@ public partial struct EnemyDeathSystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         var gameState = SystemAPI.GetSingleton<GameStateComponent>();
-
-        if (gameState.IsGameOver)
+        if (!gameState.IsGameStarted || gameState.IsGameOver)
             return;
 
         var ecbSingleton = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();

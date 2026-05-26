@@ -17,7 +17,7 @@ public partial struct EnemyMoveSystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         var gameState = SystemAPI.GetSingleton<GameStateComponent>();
-        if (gameState.IsPaused || gameState.IsGameOver)
+        if (!gameState.IsGameStarted || gameState.IsPaused || gameState.IsGameOver)
             return;
 
         var gameplayTime = SystemAPI.GetSingleton<GameplayTimeComponent>();

@@ -8,7 +8,11 @@ public partial struct GameOverSystem : ISystem
     {
         var entityFactory = state.EntityManager.CreateEntity(typeof(GameStateComponent));
 
-        state.EntityManager.SetComponentData(entityFactory, new GameStateComponent { IsGameOver = false });
+        state.EntityManager.SetComponentData(entityFactory, new GameStateComponent 
+        { 
+            IsGameStarted = false,
+            IsGameOver = false 
+        });
     }
 
     public void OnUpdate(ref SystemState state)

@@ -10,7 +10,7 @@ public class HealthAuthoring : MonoBehaviour
         public override void Bake(HealthAuthoring authoring)
         {
             var entity = GetEntity(authoring, TransformUsageFlags.None);
-            AddComponent(entity, new Health
+            AddComponent(entity, new HealthComponent
             {
                 MaxHealth = authoring.MaxHealth,
                 CurrentHealth = authoring.MaxHealth

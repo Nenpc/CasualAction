@@ -13,7 +13,7 @@ public class PlayerAttackAuthoring : MonoBehaviour
         public override void Bake(PlayerAttackAuthoring authoring)
         {
             var entity = GetEntity(authoring, TransformUsageFlags.None);
-            AddComponent(entity, new PlayerAttack
+            AddComponent(entity, new PlayerPoisonCloudSkillComponent
             {
                 Damage = authoring.Damage,
                 Radius = authoring.Radius,

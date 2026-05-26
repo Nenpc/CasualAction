@@ -1,0 +1,12 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/PlayInfo.uss?fileID=7433441132597879392&amp;guid=0eee1c0b3f162b64b8654042b24383a9&amp;type=3#PlayInfo"/>
+    <ui:VisualElement name="Top" style="flex-grow: 1; align-self: auto; flex-direction: row; justify-content: center; height: auto; width: auto; align-items: flex-start; position: absolute;">
+        <ui:Label text="Time:" name="TimeLabel" class="time" style="flex-direction: row;"/>
+        <ui:Label text="Label" name="TimeInfo" class="time" style="-unity-text-align: upper-left; text-overflow: clip; white-space: nowrap;"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="Menu" style="flex-grow: 1; align-self: center; align-content: center; overflow: visible; position: absolute; align-items: center; justify-content: space-between; top: 35%; left: 40%; bottom: 35%; right: 40%;">
+        <ui:Button text="Cancel" name="CancelButton" class="button"/>
+        <ui:Button text="Stats" name="StatsButton" class="button"/>
+        <ui:Button text="Start" name="StartButton" class="button"/>
+    </ui:VisualElement>
+</ui:UXML>

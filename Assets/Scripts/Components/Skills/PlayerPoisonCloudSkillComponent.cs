@@ -1,7 +1,8 @@
 ﻿using Unity.Entities;
 
-public struct PlayerAttack : IComponentData
+public struct PlayerPoisonCloudSkillComponent : IComponentData
 {
+    public bool  IsEnabled;
     public float Damage;           // сколько урона наносить за тик
     public float Radius;           // радиус области урона
     public float Cooldown;         // интервал между атаками (рекомендую 1.0f)

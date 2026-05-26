@@ -14,7 +14,7 @@ public partial struct EnemyDeathSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var gameState = SystemAPI.GetSingleton<GameState>();
+        var gameState = SystemAPI.GetSingleton<GameStateComponent>();
 
         if (gameState.IsGameOver)
             return;
@@ -23,7 +23,7 @@ public partial struct EnemyDeathSystem : ISystem
         var ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged);
         
         foreach (var (health, entity) in
-                 SystemAPI.Query<RefRO<Health>>()
+                 SystemAPI.Query<RefRO<HealthComponent>>()
                      .WithAll<EnemyTag>()
                      .WithNone<DeadTag>()
                      .WithEntityAccess())

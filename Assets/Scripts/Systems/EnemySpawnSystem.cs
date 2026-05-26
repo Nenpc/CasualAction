@@ -12,7 +12,8 @@ public partial struct EnemySpawnSystem : ISystem
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<ConfigComponent>();
-        state.RequireForUpdate<GameState>();
+        state.RequireForUpdate<GameStateComponent>();
+        state.RequireForUpdate<GameplayTimeComponent>();
 
         // Первый спавн через 10 секунд после старта игры
         _nextSpawnTime = 10.0f;
@@ -20,14 +21,13 @@ public partial struct EnemySpawnSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
-        var gameState = SystemAPI.GetSingleton<GameState>();
-        if (gameState.IsGameOver)
+        var gameState = SystemAPI.GetSingleton<GameStateComponent>();
+        if (gameState.IsPaused || gameState.IsGameOver)
             return;
 
-        float currentTime = (float)SystemAPI.Time.ElapsedTime;
+        var gameplayTime = SystemAPI.GetSingleton<GameplayTimeComponent>();
 
-        // Проверяем, пора ли спавнить новую волну
-        if (currentTime < _nextSpawnTime)
+        if (gameplayTime.ElapsedTime < _nextSpawnTime)
             return;
 
         var config = SystemAPI.GetSingleton<ConfigComponent>();
@@ -54,6 +54,13 @@ public partial struct EnemySpawnSystem : ISystem
 
             state.EntityManager.AddComponent<EnemyTag>(enemyEntity);
             state.EntityManager.AddComponent<CharacterComponent>(enemyEntity);
+            state.EntityManager.AddComponent<MovementSpeedComponent>(enemyEntity);
+
+            state.EntityManager.SetComponentData(enemyEntity,
+            new MovementSpeedComponent()
+            {
+                Value = 2
+            });
 
             state.EntityManager.SetComponentData(enemyEntity, 
                 LocalTransform.FromPositionRotationScale(
@@ -64,7 +71,7 @@ public partial struct EnemySpawnSystem : ISystem
         }
 
         // Планируем следующую волну через 10 секунд
-        _nextSpawnTime = currentTime + 10.0f;
+        _nextSpawnTime = (float)gameplayTime.ElapsedTime + 10.0f;
     }
 
     [BurstCompile]

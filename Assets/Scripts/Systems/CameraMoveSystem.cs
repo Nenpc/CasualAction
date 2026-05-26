@@ -6,12 +6,12 @@ public partial struct CameraMoveSystem : ISystem
 {
     public void OnUpdate(ref SystemState state)
     {
-        var gameState = SystemAPI.GetSingleton<GameState>();
+        var gameState = SystemAPI.GetSingleton<GameStateComponent>();
 
         if (gameState.IsGameOver)
             return;
 
-        if (SystemAPI.GetSingleton<GameState>().IsGameOver) return;
+        if (SystemAPI.GetSingleton<GameStateComponent>().IsGameOver) return;
 
         foreach (var playerTransform in
                  SystemAPI.Query<RefRW<LocalTransform>>()

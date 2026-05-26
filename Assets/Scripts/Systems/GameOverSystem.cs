@@ -1,25 +1,24 @@
 using Unity.Entities;
 using Unity.Burst;
-using Unity.Collections;
 
 [BurstCompile]
 public partial struct GameOverSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
     {
-        var entityFactory = state.EntityManager.CreateEntity(typeof(GameState));
+        var entityFactory = state.EntityManager.CreateEntity(typeof(GameStateComponent));
 
-        state.EntityManager.SetComponentData(entityFactory, new GameState { IsGameOver = false });
+        state.EntityManager.SetComponentData(entityFactory, new GameStateComponent { IsGameOver = false });
     }
 
     public void OnUpdate(ref SystemState state)
     {
-        var gameState = SystemAPI.GetSingleton<GameState>();
+        var gameState = SystemAPI.GetSingleton<GameStateComponent>();
 
         if (gameState.IsGameOver)
             return;
 
-        foreach (var playerHealth in SystemAPI.Query<RefRW<Health>>()
+        foreach (var playerHealth in SystemAPI.Query<RefRW<HealthComponent>>()
                      .WithAll<PlayerTag>())
         {
             if (playerHealth.ValueRO.CurrentHealth <= 0)

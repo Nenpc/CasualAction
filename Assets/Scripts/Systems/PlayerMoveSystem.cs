@@ -1,43 +1,36 @@
-﻿using Unity.Entities;
+using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
-
-using Unity.Entities;
 using Unity.Burst;
-using Unity.Collections;
 
 [BurstCompile]
 public partial struct PlayerMoveSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
     {
-        // Инициализация системы
+        state.RequireForUpdate<GameplayTimeComponent>();
+        state.RequireForUpdate<GameStateComponent>();
     }
 
     public void OnUpdate(ref SystemState state)
     {
-        var gameState = SystemAPI.GetSingleton<GameState>();
-
-        if (gameState.IsGameOver)
+        var gameState = SystemAPI.GetSingleton<GameStateComponent>();
+        if (gameState.IsPaused || gameState.IsGameOver)
             return;
 
-        var movement = new float3(
-            Input.GetAxis("Horizontal"),
-            Input.GetAxis("Vertical"),
-            0
-        );
-        
-        if (math.length(movement) <= float.Epsilon)
-            return;
+        var gameplayTime = SystemAPI.GetSingleton<GameplayTimeComponent>();
 
-        foreach (var playerTransform in 
-                 SystemAPI.Query<RefRW<LocalTransform>>()
-                     .WithAll<PlayerTag>())
+        foreach (var (transform, speed, input) in 
+                SystemAPI.Query<RefRW<LocalTransform>, RefRO<MovementSpeedComponent>, RefRO<PlayerInputComponent>>()
+                        .WithAll<PlayerTag>())
         {
-            movement = math.normalize(movement);
-            movement *= SystemAPI.Time.DeltaTime;
-            playerTransform.ValueRW.Position += movement;
+            float3 moveDir = new float3(input.ValueRO.Move.x, 0, input.ValueRO.Move.y);
+            if (math.lengthsq(moveDir) > 0.001f)
+            {
+                moveDir = math.normalize(moveDir);
+                transform.ValueRW.Position += moveDir * speed.ValueRO.Value * gameplayTime.DeltaTime;
+            }
         }
     }
 }

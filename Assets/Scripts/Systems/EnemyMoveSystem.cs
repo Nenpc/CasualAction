@@ -9,26 +9,25 @@ public partial struct EnemyMoveSystem : ISystem
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<PlayerTag>();
+        state.RequireForUpdate<GameplayTimeComponent>();
+        state.RequireForUpdate<GameStateComponent>();
     }
     
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var gameState = SystemAPI.GetSingleton<GameState>();
-
-        if (gameState.IsGameOver)
+        var gameState = SystemAPI.GetSingleton<GameStateComponent>();
+        if (gameState.IsPaused || gameState.IsGameOver)
             return;
 
-        var deltaTime = SystemAPI.Time.DeltaTime;
+        var gameplayTime = SystemAPI.GetSingleton<GameplayTimeComponent>();
 
         Entity playerEntity = SystemAPI.GetSingletonEntity<PlayerTag>();
         float3 playerPosition = SystemAPI.GetComponent<LocalTransform>(playerEntity).Position;
-        
-        foreach (var (transform, speed, entity) in
-                 SystemAPI.Query<RefRW<LocalTransform>, RefRW<SpeedComponent>>()
-                     .WithAll<SpeedComponent>()
-                     .WithNone<PlayerTag, DeadTag>()
-                     .WithEntityAccess())
+
+        foreach (var (transform, speed) in 
+                SystemAPI.Query<RefRW<LocalTransform>, RefRO<MovementSpeedComponent>>()
+                        .WithAll<EnemyTag>())
         {
             float3 enemyPos = transform.ValueRO.Position;
             float3 direction = playerPosition - enemyPos;
@@ -38,10 +37,8 @@ public partial struct EnemyMoveSystem : ISystem
                 continue;
 
             direction = math.normalize(direction);
-            
-            float3 newPosition = enemyPos + direction * speed.ValueRO.Speed * deltaTime;
-
-            transform.ValueRW.Position = newPosition;
+                
+            transform.ValueRW.Position += direction * speed.ValueRO.Value * gameplayTime.DeltaTime;
         }
     }
 }

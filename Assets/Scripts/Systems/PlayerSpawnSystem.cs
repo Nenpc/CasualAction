@@ -3,7 +3,7 @@ using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
 
-public partial struct PLayerSpawnSystem : ISystem
+public partial struct PlayerSpawnSystem : ISystem
 {
     [BurstCompile]
     public void OnCreate(ref SystemState state)
@@ -22,6 +22,15 @@ public partial struct PLayerSpawnSystem : ISystem
         
         state.EntityManager.AddComponent<PlayerTag>(characterEntity);
         state.EntityManager.AddComponent<CharacterComponent>(characterEntity);
+        state.EntityManager.AddComponent<MovementSpeedComponent>(characterEntity);
+        state.EntityManager.AddComponent<MovementSpeedComponent>(characterEntity);
+        state.EntityManager.AddComponent<PlayerInputComponent>(characterEntity);
+
+        state.EntityManager.SetComponentData(characterEntity,
+            new MovementSpeedComponent()
+            {
+                Value = 2
+            });
 
         state.EntityManager.SetComponentData(characterEntity, 
             LocalTransform.FromPositionRotationScale(

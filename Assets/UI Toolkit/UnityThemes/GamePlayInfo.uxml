@@ -5,8 +5,8 @@
         <ui:Label text="Label" name="TimeInfo" class="time" style="-unity-text-align: upper-left; text-overflow: clip; white-space: nowrap;"/>
     </ui:VisualElement>
     <ui:VisualElement name="Menu" style="flex-grow: 1; align-self: center; align-content: center; overflow: visible; position: absolute; align-items: center; justify-content: space-between; top: 35%; left: 40%; bottom: 35%; right: 40%;">
+        <ui:Button text="Continue" name="ContinueButton" class="button"/>
+        <ui:Button text="Settings" name="SettingsButton" class="button"/>
         <ui:Button text="Cancel" name="CancelButton" class="button"/>
-        <ui:Button text="Stats" name="StatsButton" class="button"/>
-        <ui:Button text="Start" name="StartButton" class="button"/>
     </ui:VisualElement>
 </ui:UXML>

@@ -25,7 +25,7 @@ public partial struct PlayerMoveSystem : ISystem
                 SystemAPI.Query<RefRW<LocalTransform>, RefRO<MovementSpeedComponent>, RefRO<PlayerInputComponent>>()
                         .WithAll<PlayerTag>())
         {
-            float3 moveDir = new float3(input.ValueRO.Move.x, 0, input.ValueRO.Move.y);
+            float3 moveDir = new float3(input.ValueRO.Move.x, input.ValueRO.Move.y, 0);
             if (math.lengthsq(moveDir) > 0.001f)
             {
                 moveDir = math.normalize(moveDir);

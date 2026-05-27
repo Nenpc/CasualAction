@@ -8,11 +8,6 @@ public partial struct GameplayTimeSystem : ISystem
         var gameState = SystemAPI.GetSingletonRW<GameStateComponent>();
         var gameplayTime = SystemAPI.GetSingletonRW<GameplayTimeComponent>();
 
-        if (!gameState.ValueRO.IsGameStarted && SystemAPI.TryGetSingletonEntity<PlayerTag>(out _))
-        {
-            gameState.ValueRW.IsGameStarted = true;
-        }
-
         if (gameState.ValueRO.IsPaused || gameState.ValueRO.IsGameOver)
         {
             gameplayTime.ValueRW.DeltaTime = 0f;

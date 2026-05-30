@@ -1,25 +1,34 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using Unity.Entities;
-using System.Linq;
 
 public class MainMenuManager : MonoBehaviour
 {
+    static string ContinueButtonName = "ContinueButton";
+    static string CloseButtonName = "CloseButton";
+
     [SerializeField] private UIDocument uiDocument;
 
     private VisualElement _root;
     private Button _startButton;
+    private Button _closeButton;
 
     private void OnEnable()
     {
         if (uiDocument == null) return;
 
         _root = uiDocument.rootVisualElement;
-        _startButton = _root.Q<Button>("ContinueButton");
+        _startButton = _root.Q<Button>(ContinueButtonName);
+        _closeButton = _root.Q<Button>(CloseButtonName);
 
         if (_startButton != null)
         {
             _startButton.clicked += OnStartButtonClicked;
+        }
+
+        if (_closeButton != null)
+        {
+            _closeButton.clicked += OnCloseButtonClicked;
         }
     }
 
@@ -28,6 +37,11 @@ public class MainMenuManager : MonoBehaviour
         if (_startButton != null)
         {
             _startButton.clicked -= OnStartButtonClicked;
+        }
+
+        if (_closeButton != null)
+        {
+            _closeButton.clicked -= OnCloseButtonClicked;
         }
     }
 
@@ -50,5 +64,10 @@ public class MainMenuManager : MonoBehaviour
 
         entityManager.SetComponentData(gameStateEntity, data);
         _root.style.display = DisplayStyle.None;
+    }
+
+    private void OnCloseButtonClicked()
+    {
+        Application.Quit();
     }
 }

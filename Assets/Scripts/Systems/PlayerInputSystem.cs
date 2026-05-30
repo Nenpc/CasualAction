@@ -20,13 +20,13 @@ public partial struct PlayerInputSystem : ISystem
 
         var input = SystemAPI.GetSingletonRW<PlayerInputComponent>();
 
-        float x = 0f, z = 0f;
+        float x = 0f, y = 0f;
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))    z += 1f;
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))  z -= 1f;
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))    y += 1f;
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))  y -= 1f;
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))  x -= 1f;
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) x += 1f;
 
-        input.ValueRW.Move = new float2(x, z);
+        input.ValueRW.Move = new float2(x, y);
     }
 }

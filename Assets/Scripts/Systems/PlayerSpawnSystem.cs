@@ -23,7 +23,6 @@ public partial struct PlayerSpawnSystem : ISystem
         state.EntityManager.AddComponent<PlayerTag>(characterEntity);
         state.EntityManager.AddComponent<CharacterComponent>(characterEntity);
         state.EntityManager.AddComponent<MovementSpeedComponent>(characterEntity);
-        state.EntityManager.AddComponent<MovementSpeedComponent>(characterEntity);
         state.EntityManager.AddComponent<PlayerInputComponent>(characterEntity);
 
         state.EntityManager.SetComponentData(characterEntity,

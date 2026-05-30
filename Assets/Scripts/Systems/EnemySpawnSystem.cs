@@ -12,11 +12,12 @@ public partial struct EnemySpawnSystem : ISystem
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<ConfigComponent>();
+        state.RequireForUpdate<EnemyConfigComponent>();
         state.RequireForUpdate<GameStateComponent>();
         state.RequireForUpdate<GameplayTimeComponent>();
 
         // Первый спавн через 10 секунд после старта игры
-        _nextSpawnTime = 10.0f;
+        _nextSpawnTime = 1.0f;
     }
 
     public void OnUpdate(ref SystemState state)
@@ -31,6 +32,12 @@ public partial struct EnemySpawnSystem : ISystem
             return;
 
         var config = SystemAPI.GetSingleton<ConfigComponent>();
+        var enemyConfig = SystemAPI.GetSingleton<EnemyConfigComponent>();
+
+        if (!enemyConfig.Config.IsCreated || enemyConfig.Config.Value.Enemies.Length == 0)
+            return;
+
+        ref var enemyDefinitions = ref enemyConfig.Config.Value.Enemies;
 
         var camera = Camera.main;
         if (camera == null) return;
@@ -50,18 +57,39 @@ public partial struct EnemySpawnSystem : ISystem
                 halfHeight, 
                 spawnOffset);
 
-            var enemyEntity = state.EntityManager.Instantiate(config.EnemyPrefab);
+            int enemyIndex = UnityEngine.Random.Range(0, enemyDefinitions.Length);
+            var enemyDefinition = enemyDefinitions[enemyIndex];
+            if (enemyDefinition.Prefab == Entity.Null)
+                continue;
+
+            var enemyEntity = state.EntityManager.Instantiate(enemyDefinition.Prefab);
 
             state.EntityManager.AddComponent<EnemyTag>(enemyEntity);
             state.EntityManager.AddComponent<CharacterComponent>(enemyEntity);
+
+            // HealthComponent
+            state.EntityManager.AddComponent<HealthComponent>(enemyEntity);
+            state.EntityManager.SetComponentData(enemyEntity, new HealthComponent
+                        {
+                            CurrentHealth = enemyDefinition.Health,
+                            MaxHealth = enemyDefinition.Health,
+                        });
+
+            // MovementSpeedComponent
             state.EntityManager.AddComponent<MovementSpeedComponent>(enemyEntity);
+            state.EntityManager.SetComponentData(enemyEntity, new MovementSpeedComponent
+                        {
+                            Value = enemyDefinition.MoveSpeed,
+                        });
 
-            state.EntityManager.SetComponentData(enemyEntity,
-            new MovementSpeedComponent()
-            {
-                Value = 2
-            });
+            // EnemyExperienceComponent
+            state.EntityManager.AddComponent<EnemyExperienceComponent>(enemyEntity);
+            state.EntityManager.SetComponentData(enemyEntity, new EnemyExperienceComponent
+                        {
+                            ExperienceReward = enemyDefinition.ExperienceReward,
+                        });
 
+            state.EntityManager.AddComponent<LocalTransform>(enemyEntity);
             state.EntityManager.SetComponentData(enemyEntity, 
                 LocalTransform.FromPositionRotationScale(
                     spawnPosition, 

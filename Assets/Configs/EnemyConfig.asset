@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ef656c81089b345871b307c7be99c5, type: 3}
+  m_Name: EnemyConfig
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyConfig
+  Enemies:
+  - Name: First
+    Prefab: {fileID: 3884766270434090690, guid: 9ec0b1f40752fcb499ebb87fa6840375, type: 3}
+    Health: 1
+    MoveSpeed: 1
+    ExperienceReward: 1
+  - Name: Second
+    Prefab: {fileID: 4554985727014075475, guid: 12a4cd56f0362e843bb7efeba68c17f9, type: 3}
+    Health: 2
+    MoveSpeed: 1
+    ExperienceReward: 2
+  - Name: Third
+    Prefab: {fileID: 2411179818294552371, guid: 6b63971331dd9524d960b5f3afcfb80e, type: 3}
+    Health: 2
+    MoveSpeed: 1.5
+    ExperienceReward: 3

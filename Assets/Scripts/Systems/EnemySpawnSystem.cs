@@ -14,6 +14,7 @@ public partial struct EnemySpawnSystem : ISystem
         state.RequireForUpdate<ConfigComponent>();
         state.RequireForUpdate<GameStateComponent>();
         state.RequireForUpdate<GameplayTimeComponent>();
+        state.RequireForUpdate<EnemyPrefabBuffer>();
 
         // Первый спавн через 10 секунд после старта игры
         _nextSpawnTime = 1.0f;
@@ -31,6 +32,15 @@ public partial struct EnemySpawnSystem : ISystem
             return;
 
         var config = SystemAPI.GetSingleton<ConfigComponent>();
+        var configEntity = SystemAPI.GetSingletonEntity<ConfigComponent>();
+        var enemyBuffer = state.EntityManager.GetBuffer<EnemyPrefabBuffer>(configEntity);
+        
+        // Копируем буфер в массив до начала структурных изменений
+        var enemyPrefabs = new Unity.Collections.NativeArray<Entity>(enemyBuffer.Length, Unity.Collections.Allocator.Temp);
+        for (int j = 0; j < enemyBuffer.Length; j++)
+        {
+            enemyPrefabs[j] = enemyBuffer[j].Value;
+        }
 
         var camera = Camera.main;
         if (camera == null) return;
@@ -50,25 +60,8 @@ public partial struct EnemySpawnSystem : ISystem
                 halfHeight, 
                 spawnOffset);
 
-            var random = UnityEngine.Random.Range(1, 4);
-
-            Entity enemyEntity;
-
-            switch (random)
-            {
-                case 1:
-                    enemyEntity = state.EntityManager.Instantiate(config.Enemy_1);
-                    break;
-                case 2:
-                    enemyEntity = state.EntityManager.Instantiate(config.Enemy_2);
-                    break;
-                case 3:
-                    enemyEntity = state.EntityManager.Instantiate(config.Enemy_3);
-                    break;
-                default:
-                    enemyEntity = state.EntityManager.Instantiate(config.Enemy_1);
-                    break;
-            }
+            var random = UnityEngine.Random.Range(0, enemyPrefabs.Length);
+            var enemyEntity = state.EntityManager.Instantiate(enemyPrefabs[random]);
 
             state.EntityManager.AddComponent<EnemyTag>(enemyEntity);
             state.EntityManager.AddComponent<CharacterComponent>(enemyEntity);
@@ -87,6 +80,8 @@ public partial struct EnemySpawnSystem : ISystem
                     1f
                 ));
         }
+        
+        enemyPrefabs.Dispose();
 
         // Планируем следующую волну через 10 секунд
         _nextSpawnTime = (float)gameplayTime.ElapsedTime + 10.0f;

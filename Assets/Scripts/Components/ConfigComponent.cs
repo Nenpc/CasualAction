@@ -4,7 +4,9 @@ public struct ConfigComponent : IComponentData
 {
     public Entity PlayerPrefab;
     public int EnemyCount;
-    public Entity Enemy_1;
-    public Entity Enemy_2;
-    public Entity Enemy_3;
+}
+
+public struct EnemyPrefabBuffer : IBufferElementData
+{
+    public Entity Value;
 }

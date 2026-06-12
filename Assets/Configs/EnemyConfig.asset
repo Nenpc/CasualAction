@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ef8399749203e44bbe4cd9df4ad4a49, type: 3}
+  m_Name: EnemyConfig
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyConfig
+  Enemies:
+  - Name: Firtht
+    Prefab: {fileID: 3884766270434090690, guid: 9ec0b1f40752fcb499ebb87fa6840375, type: 3}
+    Health: 3
+    MoveSpeed: 1
+    ExperienceReward: 1
+  - Name: Second
+    Prefab: {fileID: 3884766270434090690, guid: 2282eac6d525d8242b8a319f678e5510, type: 3}
+    Health: 2
+    MoveSpeed: 1.3
+    ExperienceReward: 2
+  - Name: Third
+    Prefab: {fileID: 3884766270434090690, guid: 4b8a99825e636e84598dfbcda3a836b1, type: 3}
+    Health: 2
+    MoveSpeed: 1.5
+    ExperienceReward: 3

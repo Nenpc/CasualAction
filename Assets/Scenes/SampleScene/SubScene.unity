@@ -149,7 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConfigAuthoring
   PlayerPrefab: {fileID: 574193236512227338, guid: a8a7dc8a6894ae44898d62e5085852d1, type: 3}
-  EnemyPrefab: {fileID: 3884766270434090690, guid: 9ec0b1f40752fcb499ebb87fa6840375, type: 3}
+  EnemyPrefab: {fileID: 0}
+  Config: {fileID: 11400000, guid: 9642f642ab12abb46b1770044d0e938e, type: 2}
   EnemyCount: 10
 --- !u!4 &1480481575
 Transform:

@@ -1,8 +1,10 @@
-﻿using Unity.Entities;
+using Unity.Entities;
 
 public struct ConfigComponent : IComponentData
 {
     public Entity PlayerPrefab;
-    public Entity EnemyPrefab;
     public int EnemyCount;
+    public Entity Enemy_1;
+    public Entity Enemy_2;
+    public Entity Enemy_3;
 }

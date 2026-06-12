@@ -16,7 +16,7 @@ public partial struct EnemySpawnSystem : ISystem
         state.RequireForUpdate<GameplayTimeComponent>();
 
         // Первый спавн через 10 секунд после старта игры
-        _nextSpawnTime = 10.0f;
+        _nextSpawnTime = 1.0f;
     }
 
     public void OnUpdate(ref SystemState state)
@@ -50,7 +50,25 @@ public partial struct EnemySpawnSystem : ISystem
                 halfHeight, 
                 spawnOffset);
 
-            var enemyEntity = state.EntityManager.Instantiate(config.EnemyPrefab);
+            var random = UnityEngine.Random.Range(1, 4);
+
+            Entity enemyEntity;
+
+            switch (random)
+            {
+                case 1:
+                    enemyEntity = state.EntityManager.Instantiate(config.Enemy_1);
+                    break;
+                case 2:
+                    enemyEntity = state.EntityManager.Instantiate(config.Enemy_2);
+                    break;
+                case 3:
+                    enemyEntity = state.EntityManager.Instantiate(config.Enemy_3);
+                    break;
+                default:
+                    enemyEntity = state.EntityManager.Instantiate(config.Enemy_1);
+                    break;
+            }
 
             state.EntityManager.AddComponent<EnemyTag>(enemyEntity);
             state.EntityManager.AddComponent<CharacterComponent>(enemyEntity);

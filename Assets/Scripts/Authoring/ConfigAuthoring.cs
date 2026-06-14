@@ -6,6 +6,7 @@ public class ConfigAuthoring : MonoBehaviour
 {
     public GameObject PlayerPrefab;
     public EnemyConfig Config;
+    public SkillLibraryConfig SkillLibrary;
     public int EnemyCount;
 
     class Baker : Baker<ConfigAuthoring>
@@ -13,10 +14,12 @@ public class ConfigAuthoring : MonoBehaviour
         public override void Bake(ConfigAuthoring authoring)
         {
             var entity = GetEntity(authoring, TransformUsageFlags.None);
+
             AddComponent(entity, new ConfigComponent
             {
                 PlayerPrefab = GetEntity(authoring.PlayerPrefab, TransformUsageFlags.Dynamic),
                 EnemyCount = authoring.EnemyCount,
+                SkillLibrary = GetEntity(authoring.SkillLibrary, TransformUsageFlags.None),
             });
 
             var buffer = AddBuffer<EnemyPrefabBuffer>(entity);

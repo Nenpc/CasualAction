@@ -19,8 +19,11 @@ public class ConfigAuthoring : MonoBehaviour
             {
                 PlayerPrefab = GetEntity(authoring.PlayerPrefab, TransformUsageFlags.Dynamic),
                 EnemyCount = authoring.EnemyCount,
-                SkillLibrary = GetEntity(authoring.SkillLibrary, TransformUsageFlags.None),
+                SkillLibrary = Entity.Null,
             });
+
+            // Создаём пустой буфер для данных скилов, который будет заполнен SkillConfigInitSystem
+            AddBuffer<SkillDataBuffer>(entity);
 
             var buffer = AddBuffer<EnemyPrefabBuffer>(entity);
             foreach (var enemy in authoring.Config.Enemies)

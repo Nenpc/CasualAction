@@ -11,7 +11,7 @@ public partial struct PlayerConeAttackSkillSystem : ISystem
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<PlayerConeAttackSkillComponent>();
-        state.RequireForUpdate<PlayerTag>();           // чтобы система жила пока есть игрок
+        state.RequireForUpdate<PlayerTag>();
         state.RequireForUpdate<GameStateComponent>();
         state.RequireForUpdate<GameplayTimeComponent>();
         

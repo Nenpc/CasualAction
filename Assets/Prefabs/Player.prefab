@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99dd81b9ada406ca9efa6d466e3a991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAuthoring
-  Speed: 1
+  Speed: 1.5
 --- !u!114 &-3677658419380266003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,10 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dadb782489b4c8aa0bdd4a3f57a87ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackAuthoring
-  Damage: 1
-  Radius: 6
-  Cooldown: 0.5
-  Timer: 1
+  m_DefaultSkillId: 1
 --- !u!114 &4994263499147261791
 MonoBehaviour:
   m_ObjectHideFlags: 0

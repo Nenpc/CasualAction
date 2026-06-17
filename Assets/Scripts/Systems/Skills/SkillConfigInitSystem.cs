@@ -61,6 +61,7 @@ public partial struct SkillConfigInitSystem : ISystem
                     skillBuffer.Add(new SkillDataBuffer
                     {
                         SkillNameHash = skillConfig.SkillName.GetHashCode(),
+                        SkillId = skillConfig.SkillID,
                         Damage = levelConfig.Damage,
                         Cooldown = levelConfig.Cooldown,
                         Prefab = prefabEntity,

@@ -3,7 +3,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SkillLibraryConfig", menuName = "Configs/Skill Library")]
 public class SkillLibraryConfig : ScriptableObject
 {
-    [Tooltip("Все созданные скилы, доступные в игре.")]
     public SkillConfig[] Skills;
 
     public SkillConfig GetSkill(string skillName)

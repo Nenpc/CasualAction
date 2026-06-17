@@ -3,10 +3,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SkillConfig", menuName = "Configs/Skill Config")]
 public class SkillConfig : ScriptableObject
 {
-    [Tooltip("Имя скила для отображения в инспекторе и выбора.")]
     public string SkillName;
 
-    [Tooltip("Уровни улучшения скила. Всего 5 уровней.")]
+    public int SkillID;
+
     public SkillLevelConfig[] Levels = new SkillLevelConfig[5];
 
     public int LevelCount => Levels != null ? Levels.Length : 0;

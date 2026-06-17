@@ -6,6 +6,7 @@ using Unity.Entities;
 public struct SkillDataBuffer : IBufferElementData
 {
     public int SkillNameHash;           // хеш имени скила для быстрого поиска
+    public int SkillId;
     public float Damage;
     public float Cooldown;
     public Entity Prefab;

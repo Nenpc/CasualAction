@@ -3,22 +3,21 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-public partial struct PlayerConeAttackSkillSystem : ISystem
+public partial struct SkillConeAttackSystem : ISystem
 {
     private float _nextCastTime;
 
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<PlayerConeAttackSkillComponent>();
-        state.RequireForUpdate<PlayerTag>();
-        state.RequireForUpdate<GameStateComponent>();
-        state.RequireForUpdate<GameplayTimeComponent>();
+        state.RequireForUpdate<CharacterConeAttackSkillComponent>();
+        //state.RequireForUpdate<CharacterTag>();
+        //state.RequireForUpdate<GameStateComponent>();
+        //state.RequireForUpdate<GameplayTimeComponent>();
         
         _nextCastTime = 0f;
     }
 
-    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         var gameState = SystemAPI.GetSingleton<GameStateComponent>();
@@ -26,7 +25,7 @@ public partial struct PlayerConeAttackSkillSystem : ISystem
             return;
 
         var gameplayTime = SystemAPI.GetSingleton<GameplayTimeComponent>();
-        var skill = SystemAPI.GetSingleton<PlayerConeAttackSkillComponent>();
+        var skill = SystemAPI.GetSingleton<CharacterConeAttackSkillComponent>();
 
         if (!skill.IsEnabled)
             return;
@@ -36,17 +35,26 @@ public partial struct PlayerConeAttackSkillSystem : ISystem
 
         TryPerformConeAttack(ref state, in skill);
 
+        // Спавним визуальный префаб скила в позиции игрока
+        if (skill.Prefab != Entity.Null)
+        {
+            var characterEntity = SystemAPI.GetSingletonEntity<CharacterTag>();
+            var characterTransform = SystemAPI.GetComponentRO<LocalTransform>(characterEntity);
+            var spawnedEntity = state.EntityManager.Instantiate(skill.Prefab);
+            state.EntityManager.SetComponentData(spawnedEntity, characterTransform.ValueRO);
+        }
+
         _nextCastTime = (float)gameplayTime.ElapsedTime + skill.Cooldown;
     }
 
     [BurstCompile]
-    private void TryPerformConeAttack(ref SystemState state, in PlayerConeAttackSkillComponent skill)
+    private void TryPerformConeAttack(ref SystemState state, in CharacterConeAttackSkillComponent skill)
     {
-        var playerEntity = SystemAPI.GetSingletonEntity<PlayerTag>();
-        var playerTransform = SystemAPI.GetComponentRO<LocalTransform>(playerEntity);
-        var playerRotation = playerTransform.ValueRO.Rotation;
+        var characterEntity = SystemAPI.GetSingletonEntity<CharacterTag>();
+        var characterTransform = SystemAPI.GetComponentRO<LocalTransform>(characterEntity);
+        var characterRotation = characterTransform.ValueRO.Rotation;
 
-        float3 forward = math.mul(playerRotation, new float3(0, 0, 1));
+        float3 forward = math.mul(characterRotation, new float3(0, 0, 1));
 
         foreach (var (enemyTransform, health, enemyEntity) in 
                 SystemAPI.Query<RefRO<LocalTransform>, RefRW<HealthComponent>>().WithAll<EnemyTag>().WithEntityAccess())
@@ -55,7 +63,7 @@ public partial struct PlayerConeAttackSkillSystem : ISystem
             if (health.ValueRO.CurrentHealth <= 0)
                 continue;
 
-            float3 toEnemy = enemyTransform.ValueRO.Position - playerTransform.ValueRO.Position;
+            float3 toEnemy = enemyTransform.ValueRO.Position - characterTransform.ValueRO.Position;
             float distanceSq = math.lengthsq(toEnemy);
 
             if (distanceSq > skill.Radius * skill.Radius || distanceSq < 0.0001f)

@@ -31,6 +31,30 @@ public static class SkillDataHelper
     }
 
     /// <summary>
+    /// Получить данные скила по id и уровню
+    /// </summary>
+    public static bool TryGetSkillData(
+        DynamicBuffer<SkillDataBuffer> skillBuffer,
+        int skillId,
+        int level,
+        out SkillDataBuffer skillData)
+    {
+        skillData = default;
+        level = System.Math.Clamp(level, 0, 4);
+
+        foreach (var data in skillBuffer)
+        {
+            if (data.SkillId == skillId && data.Level == level)
+            {
+                skillData = data;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// Получить данные скила по имени для конкретного уровня
     /// </summary>
     public static SkillDataBuffer GetSkillData(

@@ -8,7 +8,7 @@ public partial struct EnemyMoveSystem : ISystem
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<PlayerTag>();
+        state.RequireForUpdate<CharacterTag>();
         state.RequireForUpdate<GameplayTimeComponent>();
         state.RequireForUpdate<GameStateComponent>();
     }
@@ -22,7 +22,7 @@ public partial struct EnemyMoveSystem : ISystem
 
         var gameplayTime = SystemAPI.GetSingleton<GameplayTimeComponent>();
 
-        Entity playerEntity = SystemAPI.GetSingletonEntity<PlayerTag>();
+        Entity playerEntity = SystemAPI.GetSingletonEntity<CharacterTag>();
         float3 playerPosition = SystemAPI.GetComponent<LocalTransform>(playerEntity).Position;
 
         foreach (var (transform, speed) in 

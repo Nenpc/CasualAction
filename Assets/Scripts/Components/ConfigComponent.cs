@@ -1,9 +1,7 @@
 using Unity.Entities;
 
-public struct ConfigComponent : IComponentData
+public struct SkillLibraryComponent : IComponentData
 {
-    public Entity PlayerPrefab;
-    public int EnemyCount;
     public Entity SkillLibrary;
 }
 

@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-public struct PlayerPoisonCloudSkillComponent : IComponentData
+public struct CharacterPoisonCloudSkillComponent : IComponentData
 {
     public Entity Prefab;
     public int DefaultSkillId;

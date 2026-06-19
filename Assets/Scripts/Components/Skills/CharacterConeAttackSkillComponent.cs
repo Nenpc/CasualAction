@@ -1,6 +1,6 @@
 using Unity.Entities;
 
-public struct PlayerConeAttackSkillComponent : IComponentData
+public struct CharacterConeAttackSkillComponent : IComponentData
 {
     public Entity Prefab;
     public bool   IsEnabled;

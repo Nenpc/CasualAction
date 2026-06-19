@@ -11,7 +11,7 @@ public partial struct SkillConfigInitSystem : ISystem
     public void OnCreate(ref SystemState state)
     {
         _initialized = false;
-        state.RequireForUpdate<ConfigComponent>();
+        state.RequireForUpdate<SkillLibraryComponent>();
     }
 
     public void OnUpdate(ref SystemState state)
@@ -19,8 +19,7 @@ public partial struct SkillConfigInitSystem : ISystem
         if (_initialized)
             return;
 
-        var configEntity = SystemAPI.GetSingletonEntity<ConfigComponent>();
-        var config = SystemAPI.GetSingleton<ConfigComponent>();
+        var configEntity = SystemAPI.GetSingletonEntity<SkillLibraryComponent>();
 
         // Загружаем SkillLibraryConfig из Resources
         var skillLibrary = Resources.Load<SkillLibraryConfig>("Configs/SkillLibrary");

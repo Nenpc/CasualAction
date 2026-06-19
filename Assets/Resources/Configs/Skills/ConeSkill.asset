@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ConeSkill
   m_EditorClassIdentifier: Assembly-CSharp::SkillConfig
   SkillName: ConeSkill
+  SkillID: 1
   Levels:
   - Prefab: {fileID: 3261991269990620996, guid: 4af36f101a2e0d5419105f3bc50ff2ff, type: 3}
     Damage: 1

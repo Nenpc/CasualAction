@@ -13,13 +13,13 @@ public partial struct CameraMoveSystem : ISystem
 
         if (SystemAPI.GetSingleton<GameStateComponent>().IsGameOver) return;
 
-        foreach (var playerTransform in
+        foreach (var characterTransform in
                  SystemAPI.Query<RefRW<LocalTransform>>()
-                     .WithAll<PlayerTag>())
+                     .WithAll<CharacterTag>())
         {
             var cameraTransform = Camera.main.transform;
-            cameraTransform.position = playerTransform.ValueRO.Position;
-            cameraTransform.position -= 10.0f * (Vector3)playerTransform.ValueRO.Forward();  // move the camera back from the player
+            cameraTransform.position = characterTransform.ValueRO.Position;
+            cameraTransform.position -= 10.0f * (Vector3)characterTransform.ValueRO.Forward();  // move the camera back from the character
         }
     }
 }

@@ -11,7 +11,7 @@ public partial struct EnemySpawnSystem : ISystem
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<ConfigComponent>();
+        state.RequireForUpdate<LevelComponent>();
         state.RequireForUpdate<GameStateComponent>();
         state.RequireForUpdate<GameplayTimeComponent>();
         state.RequireForUpdate<EnemyPrefabBuffer>();
@@ -31,8 +31,8 @@ public partial struct EnemySpawnSystem : ISystem
         if (gameplayTime.ElapsedTime < _nextSpawnTime)
             return;
 
-        var config = SystemAPI.GetSingleton<ConfigComponent>();
-        var configEntity = SystemAPI.GetSingletonEntity<ConfigComponent>();
+        var level = SystemAPI.GetSingleton<LevelComponent>();
+        var configEntity = SystemAPI.GetSingletonEntity<LevelComponent>();
         var enemyBuffer = state.EntityManager.GetBuffer<EnemyPrefabBuffer>(configEntity);
         
         // Копируем буфер в массив до начала структурных изменений
@@ -52,7 +52,7 @@ public partial struct EnemySpawnSystem : ISystem
         float spawnOffset = 2.0f;
 
         // Спавним всю волну сразу
-        for (int i = 0; i < config.EnemyCount; i++)
+        for (int i = 0; i < level.EnemyCount; i++)
         {
             float3 spawnPosition = GetRandomPositionOutsideCamera(
                 camera.transform.position, 
@@ -64,7 +64,6 @@ public partial struct EnemySpawnSystem : ISystem
             var enemyEntity = state.EntityManager.Instantiate(enemyPrefabs[random]);
 
             state.EntityManager.AddComponent<EnemyTag>(enemyEntity);
-            state.EntityManager.AddComponent<CharacterComponent>(enemyEntity);
             state.EntityManager.AddComponent<MovementSpeedComponent>(enemyEntity);
 
             state.EntityManager.SetComponentData(enemyEntity,

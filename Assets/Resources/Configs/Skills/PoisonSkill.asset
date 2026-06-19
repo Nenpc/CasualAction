@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PoisonSkill
   m_EditorClassIdentifier: Assembly-CSharp::SkillConfig
   SkillName: ConeAttackSkill
+  SkillID: 2
   Levels:
   - Prefab: {fileID: 8346600306050367369, guid: cc50a3ca330d59147b151e84a362e07f, type: 3}
     Damage: 1

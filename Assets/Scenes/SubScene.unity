@@ -148,10 +148,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7ace36f73c4d1ab71c95972af13b75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConfigAuthoring
-  PlayerPrefab: {fileID: 574193236512227338, guid: a8a7dc8a6894ae44898d62e5085852d1, type: 3}
+  CharacterConfig: {fileID: 11400000, guid: 7967df52dfea0e34b88b0ea412685bc1, type: 2}
   Config: {fileID: 11400000, guid: 9642f642ab12abb46b1770044d0e938e, type: 2}
-  SkillLibrary: {fileID: 11400000, guid: 81457a6af6d64d64199b55c011d194e3, type: 2}
-  EnemyCount: 10
+  SkillLibrary: {fileID: 11400000, guid: 2c1924410877bb74b92a8a93cdab0159, type: 2}
+  LevelConfig: {fileID: 11400000, guid: add857bf98baccc47b5fa32a6cbb5549, type: 2}
+  SelectedLevelIndex: 1
+  SelectedCharacterIndex: 1
 --- !u!4 &1480481575
 Transform:
   m_ObjectHideFlags: 0

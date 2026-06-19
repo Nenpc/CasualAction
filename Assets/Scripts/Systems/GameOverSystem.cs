@@ -22,10 +22,10 @@ public partial struct GameOverSystem : ISystem
         if (gameState.IsGameOver)
             return;
 
-        foreach (var playerHealth in SystemAPI.Query<RefRW<HealthComponent>>()
-                     .WithAll<PlayerTag>())
+        foreach (var characterHealth in SystemAPI.Query<RefRW<HealthComponent>>()
+                     .WithAll<CharacterTag>())
         {
-            if (playerHealth.ValueRO.CurrentHealth <= 0)
+            if (characterHealth.ValueRO.CurrentHealth <= 0)
                 gameState.IsGameOver = true;
         }
     }

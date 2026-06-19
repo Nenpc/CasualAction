@@ -24,11 +24,6 @@ public class ConfigAuthoring : MonoBehaviour
                 characterEntry = authoring.CharacterConfig.Characters[index];
             }
 
-            if (characterEntry == null)
-            {
-                Debug.LogWarning("CharacterConfig не задан или не содержит ни одной записи на ConfigAuthoring.", authoring);
-            }
-
             // Добавляем разделённые конфигурационные компоненты
             AddComponent(entity, new CharacterComponent
             {

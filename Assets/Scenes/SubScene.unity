@@ -119,7 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &1480481573
+--- !u!1 &10994333
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,22 +127,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1480481575}
-  - component: {fileID: 1480481574}
+  - component: {fileID: 10994335}
+  - component: {fileID: 10994334}
   m_Layer: 0
-  m_Name: Config
+  m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1480481574
+--- !u!114 &10994334
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1480481573}
+  m_GameObject: {fileID: 10994333}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea7ace36f73c4d1ab71c95972af13b75, type: 3}
@@ -154,13 +154,13 @@ MonoBehaviour:
   LevelConfig: {fileID: 11400000, guid: add857bf98baccc47b5fa32a6cbb5549, type: 2}
   SelectedLevelIndex: 1
   SelectedCharacterIndex: 1
---- !u!4 &1480481575
+--- !u!4 &10994335
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1480481573}
+  m_GameObject: {fileID: 10994333}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -173,4 +173,4 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1480481575}
+  - {fileID: 10994335}
